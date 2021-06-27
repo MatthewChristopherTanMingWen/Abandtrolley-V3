@@ -8,42 +8,125 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var accusername: String = ""
+    @State var accpassword: String = ""
+    @State var accemail: String = ""
     @State var username: String = ""
     @State var password: String = ""
+    @State var trolleycode: String = "0"
     @State var logInScreen = true
     @State var signUpScreen = false
+    @State var wronginfo = false
     
     var body: some View {
-        VStack{
+        if (signUpScreen == false && logInScreen == true) {
             VStack{
+                VStack{
+                    VStack(alignment: .leading) {
+                        Text("Username:")
+                            .font(.callout)
+                            .bold()
+                            .font(.system(size: 20))
+                        
+                        TextField("Enter username...", text: $username)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                    VStack(alignment: .leading) {
+                        Text("Password:")
+                            .font(.callout)
+                            .bold()
+                            .font(.system(size: 20))
+                        
+                        TextField("Enter password...", text: $password)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                }.padding()
+                
                 HStack(alignment: .center) {
-                    Text("Username:")
-                        .font(.callout)
-                        .bold()
+                    Button("Log in") {
+                        print(username)
+                        print(password)
+                        if (username == accusername && password == accpassword){
+                            logInScreen = false
+                        }
+                        else {
+                            wronginfo = true
+                        }
+                    }
+                    .padding()
+                    .font(.system(size: 20))
                     
-                    TextField("Enter username...", text: $username)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    Button("No account? Sign up!"){
+                        if (signUpScreen == false){
+                            signUpScreen = true
+                        }
+                    }
+                    .padding()
+                    .font(.system(size: 20))
                 }
-                HStack {
-                    Text("Password:")
+            }.alert(isPresented: $wronginfo) {
+                Alert(title: Text("Your username or password is incorrect"), dismissButton: .default(Text("OK")))
+            }
+        }
+        else if (signUpScreen == true){
+            VStack{
+                VStack{
+                    VStack(alignment: .leading) {
+                        Text("Username:")
+                            .font(.callout)
+                            .bold()
+                            .font(.system(size: 20))
+                        
+                        TextField("Enter username...", text: $accusername)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                    VStack(alignment: .leading) {
+                        Text("Email:")
+                            .font(.callout)
+                            .bold()
+                            .font(.system(size: 20))
+                        
+                        TextField("Enter Email...", text: $accemail)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                    VStack(alignment: .leading) {
+                        Text("Password:")
+                            .font(.callout)
+                            .bold()
+                            .font(.system(size: 20))
+                        
+                        TextField("Enter password...", text: $accpassword)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                }.padding()
+                
+                Button("Create account"){
+                    if (signUpScreen == true){
+                        signUpScreen = false
+                    }
+                }
+            }
+        }
+        else if (logInScreen == false){
+            VStack{
+                Text("Unlock your trolley")
+                    .offset(y: -300)
+                    .font(.system(size: 30))
+                HStack(alignment: .center) {
+                    Text("Trolley Code:")
                         .font(.callout)
                         .bold()
+                        .font(.system(size: 20))
                     
-                    TextField("Enter password...", text: $password)
+                    TextField("Enter code on trolley...", text: $trolleycode)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
             }.padding()
             
-            HStack {
-                Button("Log in") {
-                    print(username)
-                }.padding()
-                
-                Button("No account? Sign up!"){
-                    if (signUpScreen == false){
-                        signUpScreen = true
-                    }
-                }.padding()
+            Button("Unlock Trolley"){
+                if (signUpScreen == true){
+                    signUpScreen = false
+                }
             }
         }
     }
