@@ -92,6 +92,7 @@ struct ContentView: View {
                     }
                     .padding()
                     .font(.system(size: 20))
+                    .foregroundColor(.green)
                     
                     Button("No account? Sign up!"){
                         if (signUpScreen == false){
@@ -100,10 +101,11 @@ struct ContentView: View {
                     }
                     .padding()
                     .font(.system(size: 20))
+                    .foregroundColor(.red)
                 }
                 
             }.alert(isPresented: $wronginfo) {
-                Alert(title: Text("Your username or password is incorrect"), dismissButton: .default(Text("OK")))
+                Alert(title: Text("Your username or password is incorrect"), dismissButton: .default(Text("retry")))
             }
         }
         
