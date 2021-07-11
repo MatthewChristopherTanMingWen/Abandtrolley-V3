@@ -11,7 +11,7 @@ import SwiftUI
 struct Prototype_V1App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(alert: .constant(Alerts(wronginfo: false, warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, successreturn: false, fine: 0)), acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
         }
     }
 }
