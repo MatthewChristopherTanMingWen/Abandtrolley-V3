@@ -10,10 +10,10 @@ import SwiftUI
 struct RegisterView: View {
     
     @Binding var acc: AccDetails
-    @Environment(\.presentationMode) var presentation
     @State public var dusername: String = ""
     @State var dpassword: String = ""
     @State var demail: String = ""
+    @State var created: Bool = false
     
     func setacc() {
         acc.accusername = dusername
@@ -29,11 +29,13 @@ struct RegisterView: View {
                 VStack(alignment: .leading) {
                     
                     Text("Username:")
+                        .font(.system(size: 20))
                         .font(.callout)
                         .bold()
                     
                     TextField("Enter username...", text: $dusername)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .font(.system(size: 20))
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                 }.aspectRatio(contentMode: .fill)
@@ -42,11 +44,13 @@ struct RegisterView: View {
                 VStack(alignment: .leading) {
                     
                     Text("Email:")
+                        .font(.system(size: 20))
                         .font(.callout)
                         .bold()
                     
                     TextField("Enter Email...", text: $demail)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .font(.system(size: 20))
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                 }.aspectRatio(contentMode: .fill)
@@ -55,11 +59,13 @@ struct RegisterView: View {
                 VStack(alignment: .leading) {
                     
                     Text("Password:")
+                        .font(.system(size: 20))
                         .font(.callout)
                         .bold()
                     
                     TextField("Enter password...", text: $dpassword)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .font(.system(size: 20))
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                 }.aspectRatio(contentMode: .fill)
@@ -67,10 +73,14 @@ struct RegisterView: View {
                 
                 Button("Create account"){
                     setacc()
+                    created = true
                 }
                 .padding()
-                .font(.system(size: 20))
+                .font(.system(size: 25))
                 .foregroundColor(.red)
+                .alert(isPresented: $created) {
+                    Alert(title: Text("Your account has been made!"), dismissButton: .default(Text("OK")))
+                }
                 
             }.padding()
             .navigationTitle("Create your account")

@@ -8,11 +8,6 @@
 import Foundation
 
 class Alerts: ObservableObject {
-    var wronginfo: Bool{
-        willSet {
-            objectWillChange.send()
-        }
-    }
     
     var warning: Bool{
         willSet {
@@ -50,8 +45,7 @@ class Alerts: ObservableObject {
         }
     }
     
-    init(wronginfo: Bool, warning: Bool, chargefine: Bool, failreturn: Bool, twothirdfailreturn: Bool, successreturn: Bool, fine: Int) {
-        self.wronginfo = wronginfo
+    init(warning: Bool, chargefine: Bool, failreturn: Bool, twothirdfailreturn: Bool, successreturn: Bool, fine: Int) {
         self.warning = warning
         self.chargefine = chargefine
         self.failreturn = failreturn

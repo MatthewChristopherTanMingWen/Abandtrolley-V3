@@ -15,6 +15,7 @@
 		0D30A39E26998711000CC2F2 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30A39D26998711000CC2F2 /* RegisterView.swift */; };
 		0D30A3A0269988C3000CC2F2 /* UnlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30A39F269988C3000CC2F2 /* UnlockView.swift */; };
 		0D30A3A22699F784000CC2F2 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30A3A12699F784000CC2F2 /* Alerts.swift */; };
+		0D8F24E3269AFD5500B7A591 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8F24E2269AFD5500B7A591 /* LockView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		0D30A39D26998711000CC2F2 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		0D30A39F269988C3000CC2F2 /* UnlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockView.swift; sourceTree = "<group>"; };
 		0D30A3A12699F784000CC2F2 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		0D8F24E2269AFD5500B7A591 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				0D0142A82682B0E000607049 /* Prototype_V1App.swift */,
 				0D0142AA2682B0E000607049 /* ContentView.swift */,
 				0D30A39F269988C3000CC2F2 /* UnlockView.swift */,
+				0D8F24E2269AFD5500B7A591 /* LockView.swift */,
 				0D30A39D26998711000CC2F2 /* RegisterView.swift */,
 				0D30A39B26997D90000CC2F2 /* AccDetails.swift */,
 				0D30A3A12699F784000CC2F2 /* Alerts.swift */,
@@ -152,6 +155,7 @@
 			files = (
 				0D30A39C26997D90000CC2F2 /* AccDetails.swift in Sources */,
 				0D30A39E26998711000CC2F2 /* RegisterView.swift in Sources */,
+				0D8F24E3269AFD5500B7A591 /* LockView.swift in Sources */,
 				0D0142AB2682B0E000607049 /* ContentView.swift in Sources */,
 				0D0142A92682B0E000607049 /* Prototype_V1App.swift in Sources */,
 				0D30A3A22699F784000CC2F2 /* Alerts.swift in Sources */,
