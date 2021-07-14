@@ -40,10 +40,13 @@ struct LockView: View {
             
             VStack(alignment: .center) {
                 
-                if (timeRemaining >= 3600){
-                    Text("Time: \(timeRemaining/3600) hours")
+                    Text("""
+Time remaining:
+\(String(format: "%02d", Int(timeRemaining/3600))): \(String(format: "%02d", Int(timeRemaining) % 3600 / 60)): \(String(format: "%02d", Int(timeRemaining) % 3600 % 60))
+""")
                         .font(.largeTitle)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 5)
                         .background(
@@ -51,33 +54,9 @@ struct LockView: View {
                                 .fill(Color.black)
                                 .opacity(0.75)
                         )
-                }
                 
-                else if (timeRemaining < 3600 && timeRemaining > 60){
-                    Text("Time: \(timeRemaining/60) minutes")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 5)
-                        .background(
-                            Capsule()
-                                .fill(Color.black)
-                                .opacity(0.75)
-                        )
-                }
                 
-                else if (timeRemaining < 60 && timeRemaining > 0){
-                    Text("Time: \(timeRemaining) seconds")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 5)
-                        .background(
-                            Capsule()
-                                .fill(Color.black)
-                                .opacity(0.75)
-                        )
-                }
+                
                 
                 VStack(alignment: .leading) {
                     
@@ -86,13 +65,13 @@ struct LockView: View {
                         .font(.callout)
                         .bold()
                     
-                    TextField("Enter code at trolley return area...", text: $trolleyreturncode)
+                    TextField("Enter return area code...", text: $trolleyreturncode)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .font(.system(size: 30))
+                        .font(.system(size: 25))
                 }
                 .padding()
                 .alert(isPresented: $alert.warning) {
-                    Alert(title: Text("Warning: You have failed to return your trolley in the timgiven. You have 2 hours to return it or you wilreceieve a fine."), dismissButton:
+                    Alert(title: Text("Warning: You have failed to return your trolley in the time given. You have 2 hours to return it or you wil receieve a fine."), dismissButton:
                             .default(Text("OK")))
                 }
 
