@@ -56,7 +56,6 @@ struct UnlockView: View {
                     .opacity(0)
                 
             }.navigationTitle("Unlock your trolley \(acc.accusername)")
-            .navigationBarTitleDisplayMode(.inline)
             
         }
         .alert(isPresented: $alert.chargefine) {

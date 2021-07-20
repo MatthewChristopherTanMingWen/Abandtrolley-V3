@@ -41,8 +41,7 @@ struct ContentView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
-                }.padding()
-                .background(Color.red)
+                }
                 
                 HStack(alignment: .center) {
                     
