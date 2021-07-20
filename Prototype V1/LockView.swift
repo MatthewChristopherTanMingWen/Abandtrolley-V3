@@ -31,6 +31,8 @@ struct LockView: View {
                 alert.chargefine = true
                 isActive = false
             }
+        } else if (timeRemaining == 5400){
+            alert.twothirdfailreturn = true
         }
     }
     
@@ -71,7 +73,11 @@ Time remaining:
                 }
                 .padding()
                 .alert(isPresented: $alert.warning) {
-                    Alert(title: Text("Warning: You have failed to return your trolley in the time given. You have 2 hours to return it or you wil receieve a fine."), dismissButton:
+                    Alert(title: Text("Warning: You have failed to return your trolley in the time given. You have 2 hours to return it or you will receieve a fine."), dismissButton:
+                            .default(Text("OK")))
+                }
+                .alert(isPresented: $alert.twothirdfailreturn) {
+                    Alert(title: Text("Warning: You have 1.5 hours remaining to return your trolley before you receieve a fine. Please return your trolley in the remaining time to avoid a fine"), dismissButton:
                             .default(Text("OK")))
                 }
 
