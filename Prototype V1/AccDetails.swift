@@ -25,8 +25,8 @@ class AccDetails: ObservableObject {
     }
     
     init(accusername: String, accpassword: String, accemail: String){
-        self.accusername = accusername
-        self.accpassword = accpassword
+        self.accusername = String(Int.random(in: 1...1000))
+        self.accpassword = String(Int.random(in: 1...1000))
         self.accemail = accemail
     }
 }
