@@ -85,7 +85,7 @@ struct UnlockView: View {
                                 .bold()
                                 .padding()
                             
-                            Text("To unlock a trolley, first you have to locate a trolley to unlock. Trolleys should be easy to find at the entrance of supermarkets at the trolley bay. The image below is an example of one such trolley bay.")
+                            Text("To unlock a trolley, first you have to locate a trolley to unlock. Trolleys can typically be found near the entrance of supermarkets at the trolley bay. The image below is an example of one such trolley bay.")
                                 .padding()
                             
                             Image("Trolley_Bay_1")
