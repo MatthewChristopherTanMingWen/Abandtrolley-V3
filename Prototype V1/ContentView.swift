@@ -80,6 +80,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(alert: .constant(Alerts(warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, successreturn: false, fine: 0)), acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
+        ContentView(alert: .constant(Alerts(warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, thirtyminfailreturn: false, successreturn: false, fine: 0)), acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
     }
 }

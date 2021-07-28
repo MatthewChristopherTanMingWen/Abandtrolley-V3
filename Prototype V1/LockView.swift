@@ -19,6 +19,7 @@ struct LockView: View {
     @State private var timeRemaining: Float = 10800
     @State private var isActive = true
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var showingPopover = false
     
     func charge() {
         if (timeRemaining == 0){
@@ -42,23 +43,20 @@ struct LockView: View {
             
             VStack(alignment: .center) {
                 
-                    Text("""
+                Text("""
 Time remaining:
 \(String(format: "%02d", Int(timeRemaining/3600))): \(String(format: "%02d", Int(timeRemaining) % 3600 / 60)): \(String(format: "%02d", Int(timeRemaining) % 3600 % 60))
 """)
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 5)
-                        .background(
-                            Capsule()
-                                .fill(Color.black)
-                                .opacity(0.75)
-                        )
-                
-                
-                
+                    .font(.largeTitle)
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 5)
+                    .background(
+                        Capsule()
+                            .fill(Color.black)
+                            .opacity(0.75)
+                    )
                 
                 VStack(alignment: .leading) {
                     
@@ -80,8 +78,13 @@ Time remaining:
                     Alert(title: Text("Warning: You have 1.5 hours remaining to return your trolley before you receieve a fine. Please return your trolley in the remaining time to avoid a fine"), dismissButton:
                             .default(Text("OK")))
                 }
-
-                Button("Return trolley"){
+                
+                .alert(isPresented: $alert.thirtyminfailreturn) {
+                    Alert(title: Text("Warning: You have 30 minutes remaining to return your trolley before you receieve a fine. Please return your trolley in the remaining time to avoid a fine"), dismissButton:
+                            .default(Text("OK")))
+                }
+                
+                Button("Scan QR code"){
                     if (trolleyreturncode != "1234"){
                         wronginfo2 = true
                         self.choices = "wrong"
@@ -98,6 +101,65 @@ Time remaining:
                 
                 NavigationLink("", destination: UnlockView(alert: $alert, acc: $acc), tag: "correct", selection: $choices)
                     .opacity(0)
+                
+                Button(action: {
+                    showingPopover = true
+                }) {
+                    VStack(spacing: 10) {
+                        Image(systemName: "newspaper")
+                            .resizable()
+                            .scaledToFit()
+                        Text("How to return your trolley")
+                            .font(.system(size: 17))
+                    }
+                    .frame(width: 220, height: 100)
+                }
+                .offset(y:90)
+                .popover(isPresented: $showingPopover) {
+                    ScrollView{
+                        
+                        VStack(alignment: .leading) {
+                            
+                            Text("Returning your trolley")
+                                .font(.system(size: 30))
+                                .font(.callout)
+                                .bold()
+                                .padding()
+                            
+                            Text("Step 1:")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding()
+                            
+                            Text("Once you have finished using your trolley, please bring it to the respective supermarket's trolley return bay, which can be found near each supermarket, typically in carpark areas. The image below is an example of one such trolley bay.")
+                                .padding()
+                            
+                            Image("Trolley_Bay_2")
+                                .resizable()
+                                .scaledToFit()
+                                .padding()
+                            
+                            Text("Step 2:")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding()
+                            
+                            Text("Then, to return your trolley, simply return the trolley like any other by pushing it into place in the trolley bay, either behind the first bar or behind another trolley. Then take the chain key that is attatched to either the bar or the trolley in front of it and insert it into the lock.")
+                                .padding()
+                            
+                            Text("Step 3:")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding()
+                            
+                            Text("Hold it in place and scan the QR code on the ground with this app to finish returning the trolley. The chain key should be secured. You have now successfully returned your trolley!")
+                                .padding()
+                            
+                        }
+                    }
+                    .font(.headline)
+                    .padding()
+                }
                 
             }.navigationTitle("Return your trolley")
             .onReceive(timer) { time in
@@ -118,7 +180,7 @@ Time remaining:
 
 struct LockView_Previews: PreviewProvider {
     static var previews: some View {
-        LockView(alert: .constant(Alerts( warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, successreturn: false, fine: 0)),
+        LockView(alert: .constant(Alerts( warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, thirtyminfailreturn: false, successreturn: false, fine: 0)),
                  acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
     }
 }

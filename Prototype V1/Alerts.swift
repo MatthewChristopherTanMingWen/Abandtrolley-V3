@@ -33,6 +33,12 @@ class Alerts: ObservableObject {
         }
     }
     
+    var thirtyminfailreturn: Bool{
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    
     var successreturn: Bool{
         willSet {
             objectWillChange.send()
@@ -45,11 +51,12 @@ class Alerts: ObservableObject {
         }
     }
     
-    init(warning: Bool, chargefine: Bool, failreturn: Bool, twothirdfailreturn: Bool, successreturn: Bool, fine: Int) {
+    init(warning: Bool, chargefine: Bool, failreturn: Bool, twothirdfailreturn: Bool, thirtyminfailreturn: Bool, successreturn: Bool, fine: Int) {
         self.warning = warning
         self.chargefine = chargefine
         self.failreturn = failreturn
         self.twothirdfailreturn = twothirdfailreturn
+        self.thirtyminfailreturn = thirtyminfailreturn
         self.successreturn = successreturn
         self.fine = fine
     }
