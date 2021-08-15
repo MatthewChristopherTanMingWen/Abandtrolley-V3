@@ -16,10 +16,11 @@ struct LockView: View {
     @State private var choices: String? = nil
     @State private var startTime =  Date()
     @State private var timerString = "0.00"
-    @State private var timeRemaining: Float = 10800
+    @State private var timeRemaining: Float = 1820
     @State private var isActive = true
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var showingPopover = false
+    @State private var showingPopover4 = false
     
     func charge() {
         if (timeRemaining == 0){
@@ -32,14 +33,17 @@ struct LockView: View {
                 alert.chargefine = true
                 isActive = false
             }
-        } else if (timeRemaining == 5400){
+        } else if (timeRemaining == 1800){
             alert.twothirdfailreturn = true
         }
     }
     
     var body: some View {
         
-        VStack {
+        ZStack {
+            
+            Color.purple
+                .ignoresSafeArea()
             
             VStack(alignment: .center) {
                 
@@ -69,18 +73,15 @@ Time remaining:
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .font(.system(size: 25))
                 }
+                .offset(x:0)
+                .frame(width: 350, height: 100)
                 .padding()
                 .alert(isPresented: $alert.warning) {
-                    Alert(title: Text("Warning: You have failed to return your trolley in the time given. You have 2 hours to return it or you will receieve a fine."), dismissButton:
+                    Alert(title: Text("Warning: You have failed to return your trolley in the time given. You have 1qq hours to return it or you will receieve a fine."), dismissButton:
                             .default(Text("OK")))
                 }
                 .alert(isPresented: $alert.twothirdfailreturn) {
-                    Alert(title: Text("Warning: You have 1.5 hours remaining to return your trolley before you receieve a fine. Please return your trolley in the remaining time to avoid a fine"), dismissButton:
-                            .default(Text("OK")))
-                }
-                
-                .alert(isPresented: $alert.thirtyminfailreturn) {
-                    Alert(title: Text("Warning: You have 30 minutes remaining to return your trolley before you receieve a fine. Please return your trolley in the remaining time to avoid a fine"), dismissButton:
+                    Alert(title: Text("Warning: You have 30 minutess remaining to return your trolley before you receieve a fine. Please return your trolley in the remaining time to avoid a fine"), dismissButton:
                             .default(Text("OK")))
                 }
                 
@@ -102,64 +103,99 @@ Time remaining:
                 NavigationLink("", destination: UnlockView(alert: $alert, acc: $acc), tag: "correct", selection: $choices)
                     .opacity(0)
                 
-                Button(action: {
-                    showingPopover = true
-                }) {
-                    VStack(spacing: 10) {
-                        Image(systemName: "newspaper")
-                            .resizable()
-                            .scaledToFit()
-                        Text("How to return your trolley")
-                            .font(.system(size: 17))
+                HStack {
+                    
+                    Button(action: {
+                        showingPopover = true
+                    }) {
+                        VStack(spacing: 10) {
+                            Image(systemName: "newspaper")
+                                .resizable()
+                                .scaledToFit()
+                            Text("How to return your trolley")
+                                .font(.system(size: 13))
+                        }
+                        .frame(width: 200, height: 100)
                     }
-                    .frame(width: 220, height: 100)
-                }
-                .offset(y:90)
-                .popover(isPresented: $showingPopover) {
-                    ScrollView{
-                        
+                    .popover(isPresented: $showingPopover) {
+                        ScrollView{
+                            
+                            VStack(alignment: .leading) {
+                                
+                                Text("Returning your trolley")
+                                    .font(.system(size: 30))
+                                    .font(.callout)
+                                    .bold()
+                                    .padding()
+                                
+                                Text("Step 1:")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .padding()
+                                
+                                Text("Find a trolley bay. They can usually be found in carpark areas.")
+                                    .padding()
+                                
+                                Image("Trolley_Bay_2")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding()
+                                
+                                Text("Step 2:")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .padding()
+                                
+                                Text("To return your trolley, return it like a usual trolley by inserting the key into the lock.")
+                                    .padding()
+                                
+                                Text("Step 3:")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .padding()
+                                
+                                Text("Hold the key in place and scan the QR code on the ground with this app to lock the trolley.")
+                                    .padding()
+                                
+                                Text("You have now successfully returned your trolley!")
+                                    .padding()
+                                
+                            }
+                        }
+                        .font(.headline)
+                        .padding()
+                    }
+                    
+                    Button(action: {
+                        showingPopover4 = true
+                    }) {
+                        VStack(spacing: 10) {
+                            Image(systemName: "location.viewfinder")
+                                .resizable()
+                                .scaledToFit()
+                            Text("Locate Trolley Bay")
+                                .font(.system(size: 17))
+                        }
+                        .frame(width: 220, height: 100)
+                    }
+                    .popover(isPresented: $showingPopover4) {
                         VStack(alignment: .leading) {
                             
-                            Text("Returning your trolley")
+                            Text("Nearby trolleys")
                                 .font(.system(size: 30))
                                 .font(.callout)
                                 .bold()
                                 .padding()
                             
-                            Text("Step 1:")
-                                .font(.system(size: 20))
-                                .bold()
-                                .padding()
-                            
-                            Text("Once you have finished using your trolley, please bring it to the respective supermarket's trolley return bay, which can be found near each supermarket, typically in carpark areas. The image below is an example of one such trolley bay.")
-                                .padding()
-                            
-                            Image("Trolley_Bay_2")
+                            Image("Map_1")
                                 .resizable()
                                 .scaledToFit()
                                 .padding()
-                            
-                            Text("Step 2:")
-                                .font(.system(size: 20))
-                                .bold()
-                                .padding()
-                            
-                            Text("Then, to return your trolley, simply return the trolley like any other by pushing it into place in the trolley bay, either behind the first bar or behind another trolley. Then take the chain key that is attatched to either the bar or the trolley in front of it and insert it into the lock.")
-                                .padding()
-                            
-                            Text("Step 3:")
-                                .font(.system(size: 20))
-                                .bold()
-                                .padding()
-                            
-                            Text("Hold it in place and scan the QR code on the ground with this app to finish returning the trolley. The chain key should be secured. You have now successfully returned your trolley!")
-                                .padding()
-                            
                         }
                     }
-                    .font(.headline)
-                    .padding()
                 }
+                .offset(x:10, y:70)
+                
                 
             }.navigationTitle("Return your trolley")
             .onReceive(timer) { time in
@@ -174,13 +210,14 @@ Time remaining:
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                 self.isActive = true
             }
-        }.navigationBarBackButtonHidden(true)
+                
+            }.navigationBarBackButtonHidden(true)
+        }
     }
-}
-
-struct LockView_Previews: PreviewProvider {
-    static var previews: some View {
-        LockView(alert: .constant(Alerts( warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, thirtyminfailreturn: false, successreturn: false, fine: 0)),
-                 acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
+    
+    struct LockView_Previews: PreviewProvider {
+        static var previews: some View {
+            LockView(alert: .constant(Alerts( warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, successreturn: false, fine: 0)),
+                     acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
+        }
     }
-}

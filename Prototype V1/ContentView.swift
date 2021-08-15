@@ -19,59 +19,68 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                VStack(alignment: .leading) {
-                    Text("Username:")
-                        .font(.callout)
-                        .bold()
-                        .font(.system(size: 20))
-                    TextField("Enter username...", text: $username)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                }
-                VStack(alignment: .leading) {
-                    
-                    Text("Password:")
-                        .font(.callout)
-                        .bold()
-                        .font(.system(size: 20))
-                    
-                    TextField("Enter password...", text: $password)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                }
+            
+            
+            ZStack {
                 
-                HStack(alignment: .center) {
+                Color.purple
+                    .ignoresSafeArea()
+                
+                VStack {
                     
-                    Button("Done") {
-                        if (username == acc.accusername && password == acc.accpassword){
-                            self.selection = "unlock"
-                        }
-                        else {
-                            wronginfo = true
-                            self.selection = "lock"
-                        }
+                    VStack(alignment: .leading) {
+                        Text("Username:")
+                            .font(.callout)
+                            .bold()
+                            .font(.system(size: 20))
+                        TextField("Enter username...", text: $username)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
                     }
-                    .padding()
-                    .font(.system(size: 20))
-                    .foregroundColor(.green)
+                    VStack(alignment: .leading) {
+                        
+                        Text("Password:")
+                            .font(.callout)
+                            .bold()
+                            .font(.system(size: 20))
+                        
+                        TextField("Enter password...", text: $password)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                    }
                     
-                    NavigationLink("No account? Sign up!", destination: RegisterView(acc: $acc))
+                    HStack(alignment: .center) {
+                        
+                        Button("Done") {
+                            if (username == acc.accusername && password == acc.accpassword){
+                                self.selection = "unlock"
+                            }
+                            else {
+                                wronginfo = true
+                                self.selection = "lock"
+                            }
+                        }
                         .padding()
                         .font(.system(size: 20))
-                        .foregroundColor(.red)
+                        .foregroundColor(.green)
+                        
+                        NavigationLink("No account? Sign up!", destination: RegisterView(acc: $acc))
+                            .padding()
+                            .font(.system(size: 20))
+                            .foregroundColor(.red)
+                        
+                    }.alert(isPresented: $wronginfo) {
+                        Alert(title: Text("Your username or password is incorrect"), dismissButton: .default(Text("retry")))
+                    }
                     
-                }.alert(isPresented: $wronginfo) {
-                    Alert(title: Text("Your username or password is incorrect"), dismissButton: .default(Text("retry")))
-                }
-                
-                NavigationLink("", destination: UnlockView(alert: $alert, acc: $acc), tag: "unlock", selection: $selection)
-                    .opacity(0)
-                
-            }.padding()
-            .navigationTitle("Log In")
+                    NavigationLink("", destination: UnlockView(alert: $alert, acc: $acc), tag: "unlock", selection: $selection)
+                        .opacity(0)
+                    
+                }.padding()
+                .navigationTitle("Log In")
+            }
         
         }
         .navigationBarBackButtonHidden(true)
@@ -80,6 +89,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(alert: .constant(Alerts(warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, thirtyminfailreturn: false, successreturn: false, fine: 0)), acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
+        ContentView(alert: .constant(Alerts(warning: false, chargefine: false, failreturn: false, twothirdfailreturn: false, successreturn: false, fine: 0)), acc: .constant(AccDetails(accusername: "", accpassword: "", accemail: "")))
     }
 }
