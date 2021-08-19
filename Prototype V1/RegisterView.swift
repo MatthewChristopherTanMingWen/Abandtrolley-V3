@@ -26,7 +26,8 @@ struct RegisterView: View {
             
             ZStack {
                 
-                Color.purple
+                Color.yellow
+                    .opacity(0.75)
                     .ignoresSafeArea()
                 
                 VStack{

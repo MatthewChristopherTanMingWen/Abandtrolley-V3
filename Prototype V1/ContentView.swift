@@ -23,7 +23,8 @@ struct ContentView: View {
             
             ZStack {
                 
-                Color.purple
+                Color.yellow
+                    .opacity(0.75)
                     .ignoresSafeArea()
                 
                 VStack {

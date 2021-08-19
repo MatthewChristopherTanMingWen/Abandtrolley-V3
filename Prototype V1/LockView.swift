@@ -42,7 +42,8 @@ struct LockView: View {
         
         ZStack {
             
-            Color.purple
+            Color.yellow
+                .opacity(0.75)
                 .ignoresSafeArea()
             
             VStack(alignment: .center) {
@@ -181,7 +182,7 @@ Time remaining:
                     .popover(isPresented: $showingPopover4) {
                         VStack(alignment: .leading) {
                             
-                            Text("Nearby trolleys")
+                            Text("Nearby trolley return stations:")
                                 .font(.system(size: 30))
                                 .font(.callout)
                                 .bold()
