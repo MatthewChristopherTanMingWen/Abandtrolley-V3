@@ -16,16 +16,24 @@ struct ContentView: View {
     @State var username: String = ""
     @State var password: String = ""
     @State var wronginfo = false
-
+    @State var showingUnlockView = false
+    @State var showingRegisterPopover = false
+    
+    @State public var dusername: String = ""
+    @State var dpassword: String = ""
+    @State var demail: String = ""
+    @State var created: Bool = false
+    
+    func setacc() {
+        acc.accusername = dusername
+        acc.accpassword = dpassword
+        acc.accemail = demail
+    }
+    
     var body: some View {
         NavigationView {
             
-            
             ZStack {
-                
-                Color.yellow
-                    .opacity(0.75)
-                    .ignoresSafeArea()
                 
                 VStack {
                     
@@ -39,6 +47,7 @@ struct ContentView: View {
                             .disableAutocorrection(true)
                             .autocapitalization(.none)
                     }
+                    .padding()
                     VStack(alignment: .leading) {
                         
                         Text("Password:")
@@ -51,8 +60,69 @@ struct ContentView: View {
                             .disableAutocorrection(true)
                             .autocapitalization(.none)
                     }
+                    .padding()
                     
                     HStack(alignment: .center) {
+                        
+                                                
+                        //                        NavigationLink("No account? Sign up!", destination: RegisterView(acc: $acc))
+                        //                            .padding()
+                        //                            .font(.system(size: 20))
+                        //                            .foregroundColor(.red)
+                        
+                        Button("No account? Sign up!"){
+                            showingRegisterPopover = true
+                        }
+                        .popover(isPresented: $showingRegisterPopover) {
+                            NavigationView{
+                                
+                                ZStack {
+                                    
+                                    VStack{
+                                        
+                                        TextField("Enter username...", text: $dusername)
+                                            .padding()
+                                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            .font(.system(size: 20))
+                                            .disableAutocorrection(true)
+                                            .autocapitalization(.none)
+                                        
+                                        TextField("Enter card info...", text: $demail)
+                                            .padding()
+                                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            .font(.system(size: 20))
+                                            .disableAutocorrection(true)
+                                            .autocapitalization(.none)
+                                        
+                                        TextField("Enter password...", text: $dpassword)
+                                            .padding()
+                                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            .font(.system(size: 20))
+                                            .disableAutocorrection(true)
+                                            .autocapitalization(.none)
+                                        
+                                        Button("Create account"){
+                                            setacc()
+                                            created = true
+                                        }
+                                        .padding()
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.white)
+                                        .background(Color.blue)
+                                        .cornerRadius(10)
+                                        .alert(isPresented: $created) {
+                                            Alert(title: Text("Your account has been made!"), dismissButton: .default(Text("OK")))
+                                        }
+                                        
+                                    }.padding()
+                                        .navigationTitle("Create your account")
+                                }
+                            }
+                        }
+                        
+                        .padding()
+                        .font(.system(size: 20))
+                        .foregroundColor(.blue)
                         
                         Button("Done") {
                             if (username == acc.accusername && password == acc.accpassword){
@@ -65,12 +135,9 @@ struct ContentView: View {
                         }
                         .padding()
                         .font(.system(size: 20))
-                        .foregroundColor(.green)
-                        
-                        NavigationLink("No account? Sign up!", destination: RegisterView(acc: $acc))
-                            .padding()
-                            .font(.system(size: 20))
-                            .foregroundColor(.red)
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
                         
                     }.alert(isPresented: $wronginfo) {
                         Alert(title: Text("Your username or password is incorrect"), dismissButton: .default(Text("retry")))
@@ -78,15 +145,14 @@ struct ContentView: View {
                     
                     NavigationLink("", destination: UnlockView(alert: $alert, acc: $acc), tag: "unlock", selection: $selection)
                         .opacity(0)
-                    
                 }.padding()
-                .navigationTitle("Log In")
+                    .navigationTitle("Log In")
             }
-        
         }
         .navigationBarBackButtonHidden(true)
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
