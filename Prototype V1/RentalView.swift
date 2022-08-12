@@ -12,9 +12,14 @@ struct UnlockView: View {
     @Binding var alert: Alerts
     @Binding var acc: AccDetails
     @State var trolleycode: String = "0"
+    @State var faultytrolleycode: String = "0"
     @State private var wronginfo: Bool = false
+    @State private var reported: Bool = false
+    @State private var reportinfo: Bool = false
+    @State private var alertt: Bool = false
     @State private var choice: String? = nil
     @State private var showingPopover2 = false
+    @State private var showingPopover3 = false
     @State var word = "Unlock"
     
     @State var trolleyreturncode: String = "0"
@@ -42,6 +47,13 @@ struct UnlockView: View {
             alert.twothirdfailreturn = true
         }
     }
+    
+    func report() {
+        if (faultytrolleycode == "1234"){
+            reportinfo = true
+        }
+    }
+    
     
     var body: some View {
         
@@ -75,6 +87,7 @@ struct UnlockView: View {
                         .padding()
                     
                     VStack {
+                        
                         Button("Scan QR code"){
                             if (trolleycode == "1234"){
                                 self.choice = "Correct"
@@ -86,76 +99,116 @@ struct UnlockView: View {
                                 word = "Unlock"
                             }
                             
-                        }.font(.system(size: 30))
-                            .padding()
-                    }.alert(isPresented: $wronginfo) {
+                        }
+                        .font(.system(size: 30))
+                        .padding()
+                    }
+                    .alert(isPresented: $wronginfo) {
                         Alert(title: Text("This trolley code is invalid"), dismissButton: .default(Text("OK")))
                     }
                     
-                    //NavigationLink("", destination: LockView(alert: $alert, acc: $acc), tag: "Correct", selection: $choice)
-                    //.opacity(0)
-                    
-                    Button(action: {
-                        showingPopover2 = true
-                    }) {
-                        VStack(spacing: 10) {
-                            Image(systemName: "newspaper")
-                                .resizable()
-                                .scaledToFit()
-                            Text("How to unlock your trolley")
-                                .font(.system(size: 17))
-                        }
-                        .frame(width: 220, height: 100)
-                    }
-                    .popover(isPresented: $showingPopover2) {
-                        ScrollView{
-                            
-                            VStack(alignment: .leading) {
+                    HStack {
+                        
+                        Button(action: {
+                            showingPopover2 = true
+                        }) {
+                            VStack(spacing: 10) {
                                 
-                                Text("Unlocking your trolley")
-                                    .font(.system(size: 30))
-                                    .font(.callout)
-                                    .bold()
-                                    .padding()
-                                
-                                Text("Step 1:")
-                                    .font(.system(size: 20))
-                                    .bold()
-                                    .padding()
-                                
-                                Text("Find a trolley. Trolleys can typically be found near the entrance of supermarkets at the trolley bay.")
-                                    .padding()
-                                
-                                Image("Trolley_Bay_1")
+                                Image(systemName: "newspaper")
                                     .resizable()
                                     .scaledToFit()
-                                    .padding()
                                 
-                                Text("Step 2:")
-                                    .font(.system(size: 20))
-                                    .bold()
-                                    .padding()
-                                
-                                Text("To unlock your trolley, simply scan the QR code on the trolley.")
-                                    .padding()
-                                
-                                Text("Step 3:")
-                                    .font(.system(size: 20))
-                                    .bold()
-                                    .padding()
-                                
-                                Text("Once you have scanned the QR code successfully, you will be given 3 hours of usage until you have to return it to a trolley bay")
-                                    .padding()
-                                
-                                Text("You have now successfully unlocked your trolley!")
-                                    .padding()
+                                Text("Instructions")
+                                    .font(.system(size: 17))
                             }
-                            .font(.headline)
-                            .padding()
+                            .frame(width: 180, height: 100)
                         }
+                        .popover(isPresented: $showingPopover2) {
+                            ScrollView{
+                                
+                                VStack(alignment: .leading) {
+                                    
+                                    Text("Unlocking your trolley")
+                                        .font(.system(size: 30))
+                                        .font(.callout)
+                                        .bold()
+                                        .padding()
+                                    
+                                    Text("Step 1:")
+                                        .font(.system(size: 20))
+                                        .bold()
+                                        .padding()
+                                    
+                                    Text("Find a trolley. Trolleys can typically be found near the entrance of supermarkets at the trolley bay.")
+                                        .padding()
+                                    
+                                    Image("Trolley_Bay_1")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding()
+                                    
+                                    Text("Step 2:")
+                                        .font(.system(size: 20))
+                                        .bold()
+                                        .padding()
+                                    
+                                    Text("To unlock your trolley, simply scan the QR code on the trolley.")
+                                        .padding()
+                                    
+                                    Text("Step 3:")
+                                        .font(.system(size: 20))
+                                        .bold()
+                                        .padding()
+                                    
+                                    Text("Once you have scanned the QR code successfully, you will be given 3 hours of usage until you have to return it to a trolley bay")
+                                        .padding()
+                                    
+                                    Text("You have now successfully unlocked your trolley!")
+                                        .padding()
+                                }
+                                .font(.headline)
+                            }
+                        }
+                        .offset(y:70)
+                        
+                        Button(action: {
+                            showingPopover3 = true
+                        }) {
+                            
+                            VStack(spacing: 10) {
+                                
+                                Image(systemName: "flag")
+                                    .resizable()
+                                    .scaledToFit()
+                                
+                                Text("Report a fault")
+                                    .font(.system(size: 17))
+                            }
+                            .frame(width: 180, height: 100)
+                        }
+                        .popover(isPresented: $showingPopover3) {
+                            
+                            Text("Report a fault:")
+                                .padding()
+                            
+                            TextField("Enter faulty trolley code...", text: $faultytrolleycode)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .font(.system(size: 30))
+                            
+                            Button("Report"){
+                                reported = true
+                                showingPopover3 = true
+                                report()
+                            }
+                            .alert(isPresented: $reported) {
+                                Alert(title: Text(reportinfo == true ? "Thank you for reporting a fault!" : "Please enter a valid trolley code"), dismissButton: .default(Text("OK")))
+                            }
+                            
+                        }
+                        .offset(y:70)
                     }
-                    .offset(y:70)
                 }
+                
                 .opacity(word == "Unlock" ? 1:0)
                 
                 //LockView
@@ -225,9 +278,6 @@ struct UnlockView: View {
                             .alert(isPresented: $wronginfo2) {
                                 Alert(title: Text("This return area is invalid."), dismissButton: .default(Text("OK")))
                             }
-                        
-                        //NavigationLink("", destination: UnlockView(alert: $alert, acc: $acc), tag: "correct", selection: $choices2)
-                        //   .opacity(0)
                         
                         HStack {
                             
@@ -340,11 +390,6 @@ struct UnlockView: View {
                     
                 }.navigationTitle("\(word) your trolley \(acc.accusername)")
             }
-            
-            
-            //.alert(isPresented: $alert.chargefine) {
-            //   Alert(title: Text("You have been fined for failing to return your trolley."), dismissButton: .default(Text("OK")))
-            // }
             
         }
         .navigationBarBackButtonHidden(true)
